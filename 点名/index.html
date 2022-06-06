@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="vue.js"></script>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        td {
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="test">
+
+
+        <div class="panel panel-success ">
+            <div class="panel-heading text-center">
+                <h3>点名</h3>
+            </div>
+
+            <table class="table">
+                <tr v-for="(item,index) in persons">
+                    <td v-if="item[0]" :class="item[0].isCall?'bg-danger':''"  v-on:click="changeStyle($event,item[0].name)">{{typeof item[0]=== 'undefined'?'':item[0].name}}
+                    </td>
+                    <td v-if="item[1]" :class="item[1].isCall?'bg-danger':''" v-on:click="changeStyle($event,item[1].name)">{{typeof item[1]=== 'undefined'?'':item[1].name}}
+                    </td>
+                    <td v-if="item[2]" :class="item[2].isCall?'bg-danger':''" v-on:click="changeStyle($event,item[2].name)">{{typeof item[2]=== 'undefined'?'':item[2].name}}
+                    </td>
+                    <td v-if="item[3]" :class="item[3].isCall?'bg-danger':''" v-on:click="changeStyle($event,item[3].name)">{{typeof item[3]=== 'undefined'?'':item[3].name}}
+                    </td>
+
+                    <td v-if="item[4]" :class="item[4].isCall?'bg-danger':''" v-on:click="changeStyle($event,item[4].name)">{{typeof item[4]=== 'undefined'?'':item[4].name}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <button onclick="sub()">开始</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="end()">结束</button>
+
+
+
+    </div>
+</body>
+<script>
+    // 李杰  吴征宇 
+    var str = `龙振华，胡粤明，沈宇腾，张亮，吴文斌，胡晨，何崇，张豫鄂，江承龙，陈超，沈家景，李驰，黄亚枫，杜铭星，乾玉婷，王亚南，吴征宇，朱浩润，李杰，张孝雯，徐铭，魏泽洋，金广洋，张丛，郭军辉，高郑洲，杨李，覃小于，黄鑫阳，赵凯，朱威，郭祥，王彬，李正爽`;
+    var arrs = str.split("，");
+    // var newarr = [];
+    // for(var i=0;i<arr.length;i++){
+    //     var obj = {};
+    //     obj['name'] =  arr[i];
+    //     obj['isCall'] = false;
+    //     newarr.push(obj);
+    // }
+
+    // console.log(newarr);
+    // localStorage.setItem("list",JSON.stringify(newarr))
+    // var arr = [{ "name": "李汪洋", "isCall": false }, { "name": "罗成", "isCall": false }, { "name": "汤奎", "isCall": false }, { "name": "柳冰", "isCall": false }, { "name": "李高俊子", "isCall": false }, { "name": "徐金明", "isCall": false }, { "name": "白涵", "isCall": false }, { "name": "倪志若", "isCall": false }, { "name": "刘顺杰", "isCall": false }, { "name": "劳初华", "isCall": false }, { "name": "吴洪波", "isCall": false }, { "name": "肖乐享", "isCall": false }, { "name": "罗和峰", "isCall": false }, { "name": "韩露", "isCall": false }, { "name": "刘文睿", "isCall": false }, { "name": "厉婷婷", "isCall": false }, { "name": "马光泽", "isCall": false }, { "name": "曹政", "isCall": false }, { "name": "汪磊", "isCall": false }, { "name": "熊文杰", "isCall": false }, { "name": "周冲", "isCall": false }, { "name": "曾子豪", "isCall": false }, { "name": "王轶群", "isCall": false }, { "name": "胡锦翔", "isCall": false }, { "name": "李晨", "isCall": false }, { "name": "彭梦辉", "isCall": false }, { "name": "李炫钰", "isCall": false }, { "name": "薛齐武", "isCall": false }, { "name": "舒欣", "isCall": false }, { "name": "宋怡龙", "isCall": false }, { "name": "潘葭", "isCall": false }, { "name": "陈鹏程", "isCall": false }, { "name": "陈柏冰", "isCall": false }, { "name": "吴志良", "isCall": false }, { "name": "隗世祯", "isCall": false }, { "name": "郭宇航", "isCall": false }, { "name": "张振", "isCall": false }, { "name": "张悦", "isCall": false }, { "name": "彭耀东", "isCall": false }, { "name": "龚磊", "isCall": false }, { "name": "魏飞", "isCall": false }, { "name": "赵毕辉", "isCall": false }, { "name": "陈奥", "isCall": false }, { "name": "高珅", "isCall": false }, { "name": "伍志成", "isCall": false }, { "name": "廖睿林", "isCall": false }, { "name": "张子轩", "isCall": false }, { "name": "张宬丰", "isCall": false }, { "name": "王雨萌", "isCall": false }, { "name": "付森尧", "isCall": false }, { "name": "王小彪", "isCall": false }]
+    var arr = [];
+    for(var i=0;i<arrs.length;i++){
+        var obj = {};
+        obj.name = arrs[i];
+        obj.isCall = false;
+        arr.push(obj);
+    }
+    console.log(arr);
+    
+    
+    if (localStorage.getItem('list')) {
+        arr = JSON.parse(localStorage.getItem('list'));
+    }
+
+   
+    var surearr = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (i == 0) {
+            var arrt = [];
+            arrt.push(arr[i])
+        } else if ((i + 1) % 5 == 0 && i != 0) {
+            arrt.push(arr[i])
+            surearr.push(arrt);
+            arrt = [];
+        } else if ((i + 1) == arr.length) {
+            arrt.push(arr[i]);
+            surearr.push(arrt);
+        } else {
+            arrt.push(arr[i]);
+        }
+    }
+    //    console.log(surearr);
+
+    var my = new Vue({
+        el: "#test",
+        data: {
+            persons: surearr
+        },
+        methods: {
+            changeStyle(e, name) {
+                console.log(e.currentTarget, name);
+
+
+
+
+
+
+                if (e.currentTarget.className == "bg-danger") {
+                    e.currentTarget.className = "";
+                    arr.filter(item => {
+                        if (item.name === name) {
+                            item.isCall = false;
+                        }
+                    })
+                    console.log(arr)
+                    localStorage.setItem("list",JSON.stringify(arr))
+                } else {
+                    e.currentTarget.className = "bg-danger";
+                    arr.filter(item => {
+                        if (item.name === name) {
+                            item.isCall = true;
+                        }
+                    })
+                    console.log(arr)
+                    localStorage.setItem("list",JSON.stringify(arr))
+                }
+
+            }
+        }
+
+    })
+
+    var tds = document.querySelectorAll("td");
+
+    function sub() {
+        var suretd = [];
+        for (var i = 0; i < tds.length; i++) {
+            //        console.log(tds[i].innerText);
+            //            var res =  /bg-danger/.test(tds[i].className);
+            //            console.log(res);
+            if (tds[i].innerText != "" && !(/bg-danger/.test(tds[i].className))) {
+                suretd.push(tds[i]);
+            }
+        }
+        timer = setInterval(function () {
+            for (var i = 0; i < suretd.length; i++) {
+                suretd[i].className = "";
+            }
+            var num = rand(0, suretd.length)
+            suretd[num].className = "bg-primary";
+        }, 200)
+
+
+    }
+
+    function end() {
+        var times = rand(0, 3000);
+        console.log(times);
+
+        setTimeout(function () {
+            clearInterval(timer);
+        }, times)
+
+    }
+
+    function rand(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+</script>
+
+</html>
